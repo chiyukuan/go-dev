@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: golang-ide
+  name: golang-ide
+  namespace: ray-devel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: golang-ide
+  template:
+    metadata:
+      labels:
+        run: golang-ide
+    spec:
+      containers:
+      - image: quay.io/raykuan/golang-ide
+        name: golang-ide
+        command: [ "/bin/sh", "-c" ]
+        args: [ "while true ; do date >> /var/log/date.log ; sleep 5 ; done" ]
+        volumeMounts:
+        - mountPath: /home/dev/gitwork
+          name: workspace-code
+        - mountPath: /home/dev/.ssh
+          name: workspace-ssh
+        - mountPath: /home/dev/misc
+          name: workspace-misc
+      imagePullSecrets:
+        - name: quay-pull-secret
+      nodeSelector:
+        devel-src: golang
+      volumes:
+      - name: workspace-code
+        hostPath:
+          path: /opt/golang-ide/gitwork
+          type: Directory
+      - name: workspace-ssh
+        hostPath:
+          path: /opt/golang-ide/.ssh
+          type: Directory
+      - name: workspace-misc
+        hostPath:
+          path: /opt/golang-ide/misc
+          type: Directory
+

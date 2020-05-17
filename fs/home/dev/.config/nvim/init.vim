@@ -134,6 +134,9 @@ nmap <F8> :TagbarToggle<CR>
 nmap <C-Left> :tabprevious<CR>
 nmap <C-Right> :tabnext<CR>
 
+" exit from terminal mode
+tnoremap <Esc> <C-\><C-n>
+
 augroup go
   autocmd!
 

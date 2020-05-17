@@ -1,8 +1,6 @@
 FROM golang:1.13
 MAINTAINER Ray Kuan
 
-ADD fs/ /
-
 # install pagkages
 RUN apt-get update                                                      && \
     apt-get install -y ncurses-dev libtolua-dev exuberant-ctags sudo    && \
@@ -32,6 +30,7 @@ RUN cd /tmp                                                             && \
     make CMAKE_INSTALL_PREFIX=/usr CMAKE_BUILD_TYPE=RelWithDebInfo      && \
     make install
 
+# protobuf
 RUN cd /tmp                                                             && \
     git clone https://github.com/google/protobuf.git                    && \
     cd protobuf                                                         && \
@@ -39,7 +38,7 @@ RUN cd /tmp                                                             && \
     ./configure                                                         && \
     make                                                                && \
     make install                                                        && \
-    ldconfig                                                            && \
+    ldconfig
 
 # cleanup
 RUN rm -rf /tmp/* /var/tmp/*
@@ -62,6 +61,8 @@ RUN go get golang.org/x/tools/cmd/godoc                                 && \
     GO111MODULE=on go get golang.org/x/tools/gopls@latest               && \
 # cleanup
     rm -rf /go/src/* /go/pkg
+
+ADD fs/ /
 
 # add dev user
 RUN adduser dev --disabled-password --gecos ""                          && \

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ray-devel
+spec:
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: quay-pull-secret
+  namespace: ray-devel
+data:
+  .dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJxdWF5LmlvIjogewogICAgICAiYXV0aCI6ICJjbUY1YTNWaGJpdG5iMnhoYm1kZmFXUmxYM0p2WW05ME9rczFTMXBHVURZMFZ6ZFlWRWs1TUZKRVIwdFRWMWRUV0ZaUFN6TllNRWRVVURJMVVVUkZSMHhUVWxVMU5VWk9OME5RU0VORlUxZFlRVEpPVkRaSFZrdz0iLAogICAgICAiZW1haWwiOiAiIgogICAgfQogIH0KfQ==
+type: kubernetes.io/dockerconfigjson
+---

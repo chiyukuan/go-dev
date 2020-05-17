@@ -1,0 +1,3 @@
+FROM quay.io/raykuan/golang-ide:pre
+
+COPY fs/ /
